@@ -1,0 +1,9 @@
+{
+"type": "FeatureCollection",
+"name": "kodomoen",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::2451" } },
+"features": [
+{ "type": "Feature", "properties": { "Name": "Toyoumi Kodomoen", "Location": "161-1 Fudodo" }, "geometry": { "type": "Point", "coordinates": [ 52804.42119, -53190.323539999997593 ] } },
+{ "type": "Feature", "properties": { "Name": "Katakai Kodomoen", "Location": "1661 Tanakaaraoi" }, "geometry": { "type": "Point", "coordinates": [ 55573.43293999999878, -50845.850250000003143 ] } }
+]
+}

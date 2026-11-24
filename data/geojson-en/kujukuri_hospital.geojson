@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "kujukuri_hospital",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::2451" } },
+"features": [
+{ "type": "Feature", "properties": { "Name": "Kujukuri Hospital", "Location": "2700 Katakai" }, "geometry": { "type": "Point", "coordinates": [ 54768.723230000003241, -51542.5743799999982 ] } }
+]
+}

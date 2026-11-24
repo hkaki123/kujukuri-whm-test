@@ -1,0 +1,160 @@
+/* 印刷画面設定（forprint） */
+
+html.forprint, body.forprint {
+	background-color: #fff;
+}
+#view.forprint {
+	border: solid 1px #000000;
+}
+.ol-zoom.forprint, 
+.ol-zoomslider.forprint, 
+.ol-overviewmap.forprint, 
+#geolocationcontrol.forprint, 
+#mouse-position.forprint, 
+#baselayercontrol.forprint,
+#layerbox_1.forprint,
+#searchwindowcontrol.forprint,
+#searchmenu.forprint {
+	display: none;
+}
+#hanrei_forprint div div span.fancytree-title {
+	cursor: default;
+}
+#hanrei_layer_1, #hanrei_layer_2 {
+	display: inline-block;
+	width: auto;
+	padding: 1em 0.5em 0.5em 0.5em;
+	vertical-align: top;
+}
+#hanrei_image_1 {
+	display: inline-block;
+	width: auto;
+	padding: 1em 0.5em 0.5em 1em;
+}
+
+#hanrei_forprint.isiconlabel #hanrei_image_1,
+#hanrei_forprint.landscape  #hanrei_image_1 {
+	width: 250px;
+}
+
+#hanrei_image_1 img {
+	max-width: 250px;
+	margin-right: 1em;
+	padding-bottom: 5px;
+}
+#copyright.forprint {
+	float: right;
+}
+#btn_elevation.forprint {
+	display: none;
+}
+#btn_Inundation.forprint {
+	display: none;
+}
+/* 印刷画面：用紙ヨコ設定 */
+#view.landscape, #hanrei_forprint.landscape {
+	float: left;
+}
+#hanrei_forprint.landscape div {
+	display: block;
+}
+#hanrei_forprint.landscape #hanrei_layer_1,
+#hanrei_forprint.landscape #hanrei_layer_2 {
+	padding: 0 0.5em;
+}
+
+/* 印刷時設定 */
+@media print {
+	.noprint { display: none; }
+	.gm-style-cc { display: none; }
+	#hanrei_image_1 img {
+		max-width: 250px!important;
+	}
+	#copyright {
+		position: absolute;
+		top: 0;
+		right: 0;
+	}
+}
+
+#popup.forprint div#popup-content div.table {
+	overflow-y: hidden;
+	max-height: auto;
+}
+#popup.forprint div#popup-content div.route_search {
+	display: none;
+}
+
+.color-block { display: none; }
+.forprint .color-block {
+	position:absolute!important;
+	left:0!important;
+	top:0!important;
+	width:100%!important;
+	height:100%!important;
+	display: block!important;
+	visibility: visible!important;
+	z-index: -1!important;
+}
+#myattribution div, #myattribution div ul, #myattribution div ul li, #myattribution div button {
+	border: none!important;
+	/* border-radius: 0!important; */
+	/* background: transparent !important; */
+}
+#popup.forprint {
+	border: #555 solid 1px !important;
+	border-radius: 0;
+}
+#popup.forprint.ol-popup::before {
+	border-top-color:#555;
+}
+#popup.forprint .ol-popup-closer{
+	color:#555;
+}
+#popup.forprint #popup-title {
+	border-bottom: #555 solid 1px !important;
+	border-radius: 0;
+	color: #000000;
+	background: transparent;
+}
+#toolbox-righttop.forprint {
+	display: none;
+}
+#toolbox-rightbottom.forprint {
+	bottom : 7px;
+}
+.ol-scale-line.forprint {
+	background: transparent;
+	bottom: 1.8em;
+}
+.forprint .ol-scale-line-inner {
+	color: #000000;
+	border: 1px solid #000000;
+	border-top: none;
+}
+#myattribution.forprint .ol-attribution{
+	max-width: initial;
+	background: transparent !important;
+	bottom: 1px;
+}
+#myattribution.forprint .ol-attribution .color-block {
+	margin-top: 0;
+	max-height: initial;
+}
+#myattribution.forprint div ul li a {
+	text-decoration: none;
+	color: #000000;
+}
+#gmap.forprint div.gmnoprint,
+#gmap.forprint div.gm-style-cc {
+	display: none;
+}
+#gmap.forprint div.gmnoscreen {
+	display: block;	
+	margin-right: 7px;
+	margin-bottom: 7px;
+}
+#gmap.forprint div.gmnoscreen div {
+	background-color: #ffffff!important;
+	padding: 0px 6px;
+}

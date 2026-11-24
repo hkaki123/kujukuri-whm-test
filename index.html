@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<meta name="robots" content="noindex, nofollow">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>九十九里町ハザードマップ</title>
+		<script src="library/jquery-4.0.0.min.js" type="text/javascript"></script>
+		<script src="library/jquery-ui-1.14.2/jquery-ui.min.js" type="text/javascript"></script>
+		<link rel="stylesheet" href="library/jquery-ui-1.14.2/jquery-ui.min.css" type="text/css">
+		<script type="text/javascript">
+			if (typeof console == "undefined") {
+				console = function () { };
+				console.dir = function (v) { };
+				console.log = function (v) { };
+			}
+			if (typeof console.dir == "undefined") {
+				console.dir = function (v) { };
+			}
+			if (typeof console.log == "undefined") {
+				console.log = function (v) { };
+			}
+		</script>
+		<style>
+			html, body {
+				/*height: 100%;*/
+				margin: 0;
+				background-color: aliceblue;
+			}
+			#header h1 {
+				margin: 0;
+    			background: white;
+			}
+			#header .head_word {
+				padding-left: 30px;
+   				padding-top: 5px;
+   				color: #0c59ab;
+    			border-bottom: 6px double #2D6EB2;
+			}
+			.language_button{
+				position: absolute;
+				top: 10px;
+				right: 30px;
+				width: 90px;
+				height: 30px;
+				padding: auto;
+				font-size: 1rem;
+				background-color: #D1F4F4;
+				border-width: 2px;
+				border-color: #2D6EB2;
+				border-radius: 2px;
+				cursor: pointer;
+			}
+			.language_button:hover {
+				background-color: #AAEEEE;
+				border-color: #0c59ab;
+			}
+			#footer {
+				text-align: center;
+			}
+			#footer a { text-decoration: none; }
+			#view {
+				/*position: absolute;*/
+    			overflow-y: hidden;
+    			height: auto;
+    			width: 90%;
+    			left: 0;
+    			right: 0;
+    			margin: 0.5em auto;
+    			-webkit-border-radius: 1em;
+    			background: white;
+    			padding: 8px;
+			}
+			#view h2 {
+				padding-left: 30px;
+    			margin: 0;
+    			min-height: 42px;
+    			line-height: 42px;
+    			background-repeat: no-repeat;
+    			background-position: right 20px bottom;
+    			border-bottom: 5px solid #2D6EB2;
+			}
+			#view h4 {
+    			padding-left: 25px;
+    			padding-right: 10px;
+    			min-height: 29px;
+    			line-height: 29px;
+    			border-bottom: 1.5px solid #2D6EB2;
+    			background-color: #e5f2ff;
+    			font-size: 1.1em;
+    			-webkit-margin-before: 0.5em;
+    			-webkit-margin-after: 0.5em;
+			}
+			#view a {
+				word-wrap:break-word;
+			}
+			.index {
+				padding: 0 30px 0 30px;
+				margin: 1em 0 1em 0;
+			}
+			.index .map_type{
+				margin: 1em 0 1em 0;
+			}
+			.index .index_title {
+    			font-size: 20px;
+    			border-bottom: 2.5px solid #2D6EB2;
+			}
+			.index li{
+				margin: 0.5em 0 0 0;
+			}
+
+			.menu {
+				width: 100%;
+    			display: inline-block;
+    			text-align: center;
+			}
+			.menu img{
+				width: 200px;
+				margin: 0 20px 0.5em 20px;
+				box-shadow: 1.5px 1.5px 3px rgba(0, 0, 0, 0.5);
+			}
+			.index .index {
+				padding-left: 1em;
+				margin: 0;
+			}
+			.index .index_description {
+				padding-left: 1em;
+				margin: 0;
+    			margin-top: -1.5em;
+			}
+			.index .index_description_sub {
+				padding-left: 2em;
+				margin: 0;
+    			margin-top: -1.5em;
+			}
+			.index .index_description_sub2 {
+				padding-left: 2em;
+				margin: 0;
+			}
+			.index2 {
+				padding: 0 30px 0 55px;
+			}
+			.index2 li{
+				margin: 0.5em 0 0 0;
+			}
+			
+			@media screen and (max-width:830px) {
+				#header .head_word {
+					padding-left: 0px;
+   					padding-top: 5px;
+   					color: #0c59ab;
+    				border-bottom: 6px double #2D6EB2;
+    				text-align: center;
+    				font-size: 0.9em;
+				}
+				#view h2 {
+					padding-left: 10px;
+				}
+				#view h4 {
+					padding: 0 10px 0 10px;
+				}
+				.index {
+					padding: 0 15px 0 15px;
+				}
+				.index2 {
+					padding: 0 15px 0 40px;
+				}
+			}
+			@media screen and (max-width:600px){
+				.language_button{
+					position: static;
+					float: right;
+					margin: 10px 30px;
+					background-color: #FFFFFC;
+					border-color: #0c59ab;
+				}
+			}
+			
+			dl.desc { margin-left: 2em;}
+			.desc dt {display: list-item; list-style: square;}
+			</style>
+		</head>
+<body>
+		<div id="header" class="header">
+			<h1>
+				<div class="head_word">九十九里町ハザードマップ
+				</div>
+			</h1>
+		</div>
+		<button class="language_button" onclick="location.href='index-en.html'">English</button> 
+
+			<div id="view">
+			<h2>ご利用にあたって</h2>
+			<p>
+				<h4>○&nbsp;九十九里町ハザードマップを閲覧できます。</h4>
+				<div class="index">
+					<div class="map_type">
+						<div class="index_title">【津波浸水想定区域図について】</div>
+					</div>
+
+					<ul class="index2">
+						<li>想定される最大規模の津波（L2津波）</li>
+							「津波防災地域づくりに関する法律」に基づき、最大クラスの津波（L2津波）が悪条件下において発生した場合に、
+							<br>想定される浸水範囲と浸水深を示したものです。
+
+						<li>大津波警報10m</li>
+							千葉県が作成した「津波浸水予測図〔千葉県地震被害想定調査結果（平成26・27年度）〕」をもとに、
+							<br>「大津波警報10ｍ（津波高は概ね7ｍから10ｍ）」が発表された場合に、想定される浸水範囲と浸水深を示したものです。
+
+						<li>大津波警報5m</li>
+							千葉県が作成した「津波浸水予測図〔千葉県地震被害想定調査結果（平成26・27年度）〕」をもとに、
+							<br>「大津波警報5ｍ（津波高は概ね3ｍから5ｍ）」が発表された場合に、想定される浸水範囲と浸水深を示したものです。
+					   
+
+						<li>津波警報3m</li>
+							千葉県が作成した「津波浸水予測図〔千葉県地震被害想定調査結果（平成26・27年度）〕」をもとに、
+							<br>「津波警報3ｍ（津波高は概ね1ｍから3ｍ）」が発表された場合に、想定される浸水範囲と浸水深を示したものです。
+
+						<li>高潮浸水</li>
+							千葉県が「水防法」に基づき作成した「高潮浸水想定区域図（千葉東沿岸）」をもとに、
+							<br>想定し得る最大規模の高潮（室戸台風級の台風）により氾濫が発生した場合に、想定される浸水範囲と浸水深を示したものです。
+
+						<li>日本海溝地震津波</li>
+							内閣府 日本海溝・千島海溝沿いの巨大地震モデル検討会（<a href="https://www.bousai.go.jp/jishin/nihonkaiko_chishima/model/index.html" target="_blank">https://www.bousai.go.jp/jishin/nihonkaiko_chishima/model/index.html</a>）において、
+							<br>検討された日本海溝（三陸・日高沖）モデルにおける浸水範囲と浸水深を示したものです。
+
+						<li>千島海溝地震津波</li>
+							内閣府 日本海溝・千島海溝沿いの巨大地震モデル検討会（<a href="https://www.bousai.go.jp/jishin/nihonkaiko_chishima/model/index.html" target="_blank">https://www.bousai.go.jp/jishin/nihonkaiko_chishima/model/index.html</a>）において、
+							<br>検討された千島海溝（十勝・根室沖）モデルにおける浸水範囲と浸水深を示したものです。
+					</ul>
+
+					<div class="index">
+						<dt>【地図をご覧いただく際の注意点】</dt>
+						<dd>・地図に示した浸水が及ぶ範囲や深さは、任意の想定に基づいたシミュレーションの計算結果です。</dd>
+						<dd>・浸水が及ぶ範囲や深さは、地震の規模や震源の位置等の諸条件により、大きく異なる可能性があります。</dd>
+					</div>
+					
+					<p>　</p>
+
+				</div>
+
+				<div class="index">
+
+					<div class="map_type">
+						<div class="index_title">【洪水浸水想定区域図について】</div>
+					</div>
+					<ul class="index2">
+						<li>想定最大規模</li>
+						想定し得る最大の降雨(概ね1000年に1度程度起こる大雨)により、河川が氾濫した場合に想定される浸水範囲と浸水深を示したものです。<br />
+						千葉県が公表した「洪水浸水想定区域図(想定最大規模)」をもとに、町内に影響を及ぼす５河川（真亀川、作田川、南白亀川、木戸川、堀川）の区域を重ね合わせて作成しています。<br />
+
+						<br />
+						<dt>〔想定した降雨〕</dt>
+						<dd>・真亀川：真亀川流域の24時間総雨量 690.0mm</dd>
+						<dd>・作田川：作田川流域の24時間総雨量 686.5mm</dd>
+						<dd>・南白亀川：南白亀川流域の24時間総雨量 663.7mm</dd>
+						<dd>・木戸川：木戸川流域の24時間総雨量 676.5mm</dd>
+						<dd>・堀  川：堀川流域の24時間総雨量 690.0mm</dd>
+
+						<br />
+						<dt>・家屋倒壊等氾濫想定区域（河岸侵食）</dt>
+						<dd>想定最大規模の降雨により洪水が発生した場合、家屋の流失・倒壊をもたらすような河岸侵食が発生するおそれがある範囲を示したものです。</dd>
+
+						<br />
+						<li>計画規模</li>
+
+						計画規模の降雨(概ね50年に1度程度起こる大雨)により、河川が氾濫した場合に想定される浸水範囲と浸水深を示したものです。<br />
+						千葉県が公表した「洪水浸水想定区域図(計画規模)」をもとに、
+						<br>町内に影響を及ぼす３河川（真亀川、作田川、南白亀川）の区域を重ね合わせて作成しています。<br />
+						<br />
+						<dt>〔想定した降雨〕</dt>
+						<dd>・真亀川：真亀川流域の24時間総雨量 288.0mm</dd>
+						<dd>・作田川：作田川流域の24時間総雨量 287.0mm</dd>
+						<dd>・南白亀川：南白亀川流域の24時間総雨量 288.3mm</dd>
+
+					</ul>
+
+					<div class="index">
+						<dt>【地図をご覧いただく際の注意点】</dt>
+						<dd>・地図に示した浸水が及ぶ範囲や深さは、任意の想定に基づいたシミュレーションの計算結果です。</dd>
+						<dd>・浸水が及ぶ範囲や深さは、降雨状況等の諸条件により、大きく異なる可能性があります。</dd>
+						<dd>・高潮及び内水による氾濫等は考慮していません。</dd>
+					</div>
+
+					<p>　</p>
+
+				</div>
+			</p>
+			<p>
+				<h4>○&nbsp;このサービスのご利用に際しましては、次の事項にご同意の上、ご利用願います。</h4>
+				<ul class="index2">
+					<li>ハザードマップに関しては、ある一定の条件をもとにしたシミュレーション結果に基づいた参考資料です。そのため実際と異なる場合があります。</li>
+
+					<li>本サービスで提供する地図情報は、九十九里町ハザードマップに関する情報の全てではありません。</li>
+					<li>背景地図（<a href="https://maps.gsi.go.jp/development/ichiran.html" target="_blank">地理院タイル</a>、<a href="https://www.google.com/maps/" target="_blank">Google Maps</a>）は現況と異なる場合があります。</li>
+					<li>標高表示には、地理院地図の標高APIを使用しています。</li>
+					<li>本サービスは、以下のブラウザで動作確認を行っています。</li>
+					Google Chrome、Microsoft Edge、Firefox
+					<li><a href="https://www.town.kujukuri.chiba.jp/" target="_blank">九十九里町</a>は、本サービスのご利用によって直接又は間接の損失・障害が発生した場合、一切の責任を負いません。</li>
+					<li>本サービスは、内容の一部又は全部を予告なく変更する場合があります。また、一時的にサービスの一部又は全部を中断する場合があります。</li>
+					<li>九十九里町ハザードマップの防災に関する著作権は<a href="https://www.town.kujukuri.chiba.jp/" target="_blank">九十九里町</a>に帰属します。またこのマップの編集・加工・複製、営利目的利用、各種法令に違反した利用、他人の権利等を侵害する目的・手段・方法での利用などを禁止します。</li>
+				</ul>
+			</p>
+			<p>　</p>
+			<p id="about_address_search">
+				<h4>○&nbsp;住所検索機能についてのご利用は次の事項にご同意の上、ご利用願います。</h4>
+				<ol class="index2">
+					<li>このWeb版九十九里町ハザードマップの住所検索機能は、利用者の利便性を目的として、民間（Google社）の住所検索機能を利用して提供しています。</li>
+					<li>住所検索の結果は全ての正しい情報を提供するものではありません。</li>
+					<li>九十九里町は利用者が特定の目的等に使用されても有用であることを保証しません。また利用によって発生する直接又は間接の損失、損害等について、一切の責任を負いません。</li>
+					<li>この住所検索機能は、上記事項にご同意され利用者の責任において利用するものとします。</li>
+				</ol>
+			</p>
+			<p style="text-align: center; margin-top: 50px;">
+				以下のボタンから、ハザードマップを利用できます。
+				<div class="menu">
+					<a href="map.html#tsunami"><img src="images/title_img.png" alt="九十九里町 津波・洪水ハザードマップ" title="九十九里町 津波・洪水ハザードマップ"></a>
+				</div>
+			</p>			
+		</div>		
+		<div id="footer" class="footer">
+				<p><small><a href="https://www.town.kujukuri.chiba.jp/" target="_blank">Copyright(c) 千葉県山武郡九十九里町</a></small></p>
+		</div>
+	</body>
+</html>

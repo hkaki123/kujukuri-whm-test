@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<meta name="robots" content="noindex, nofollow">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>Kujukuri Town Hazard Map</title>
+		<script src="library/jquery-4.0.0.min.js" type="text/javascript"></script>
+		<script src="library/jquery-ui-1.14.2/jquery-ui.min.js" type="text/javascript"></script>
+		<link rel="stylesheet" href="library/jquery-ui-1.14.2/jquery-ui.min.css" type="text/css">
+		<script type="text/javascript">
+			if (typeof console == "undefined") {
+				console = function () { };
+				console.dir = function (v) { };
+				console.log = function (v) { };
+			}
+			if (typeof console.dir == "undefined") {
+				console.dir = function (v) { };
+			}
+			if (typeof console.log == "undefined") {
+				console.log = function (v) { };
+			}
+		</script>
+		<style>
+			html, body {
+				/*height: 100%;*/
+				margin: 0;
+				background-color: aliceblue;
+			}
+			#header h1 {
+				margin: 0;
+    			background: white;
+			}
+			#header .head_word {
+				padding-left: 30px;
+   				padding-top: 5px;
+   				color: #0c59ab;
+    			border-bottom: 6px double #2D6EB2;
+			}
+			.language_button{
+				position: absolute;
+				top: 10px;
+				right: 30px;
+				width: 90px;
+				height: 30px;
+				padding: auto;
+				font-size: 1rem;
+				background-color: #D1F4F4;
+				border-width: 2px;
+				border-color: #2D6EB2;
+				border-radius: 2px;
+				cursor: pointer;
+			}
+			.language_button:hover {
+				background-color: #AAEEEE;
+				border-color: #0c59ab;
+			}
+			#footer {
+				text-align: center;
+			}
+			#footer a { text-decoration: none; }
+			#view {
+				/*position: absolute;*/
+    			overflow-y: hidden;
+    			height: auto;
+    			width: 90%;
+    			left: 0;
+    			right: 0;
+    			margin: 0.5em auto;
+    			-webkit-border-radius: 1em;
+    			background: white;
+    			padding: 8px;
+			}
+			#view h2 {
+				padding-left: 30px;
+    			margin: 0;
+    			min-height: 42px;
+    			line-height: 42px;
+    			background-repeat: no-repeat;
+    			background-position: right 20px bottom;
+    			border-bottom: 5px solid #2D6EB2;
+			}
+			#view h4 {
+    			padding-left: 25px;
+    			padding-right: 10px;
+    			min-height: 29px;
+    			line-height: 29px;
+    			border-bottom: 1.5px solid #2D6EB2;
+    			background-color: #e5f2ff;
+    			font-size: 1.1em;
+    			-webkit-margin-before: 0.5em;
+    			-webkit-margin-after: 0.5em;
+			}
+			#view a {
+				word-wrap:break-word;
+			}
+			.index {
+				padding: 0 30px 0 30px;
+				margin: 1em 0 1em 0;
+			}
+			.index .map_type{
+				margin: 1em 0 1em 0;
+			}
+			.index .index_title {
+    			font-size: 20px;
+    			border-bottom: 2.5px solid #2D6EB2;
+			}
+			.index li{
+				margin: 0.5em 0 0 0;
+			}
+
+			.menu {
+				width: 100%;
+    			display: inline-block;
+    			text-align: center;
+			}
+			.menu img{
+				width: 200px;
+				margin: 0 20px 0.5em 20px;
+				box-shadow: 1.5px 1.5px 3px rgba(0, 0, 0, 0.5);
+			}
+			.index .index {
+				padding-left: 1em;
+				margin: 0;
+			}
+			.index .index_description {
+				padding-left: 1em;
+				margin: 0;
+    			margin-top: -1.5em;
+			}
+			.index .index_description_sub {
+				padding-left: 2em;
+				margin: 0;
+    			margin-top: -1.5em;
+			}
+			.index .index_description_sub2 {
+				padding-left: 2em;
+				margin: 0;
+			}
+			.index2 {
+				padding: 0 30px 0 55px;
+			}
+			.index2 li{
+				margin: 0.5em 0 0 0;
+			}
+			
+			@media screen and (max-width:830px) {
+				#header .head_word {
+					padding-left: 0px;
+   					padding-top: 5px;
+   					color: #0c59ab;
+    				border-bottom: 6px double #2D6EB2;
+    				text-align: center;
+    				font-size: 0.9em;
+				}
+				#view h2 {
+					padding-left: 10px;
+				}
+				#view h4 {
+					padding: 0 10px 0 10px;
+				}
+				.index {
+					padding: 0 15px 0 15px;
+				}
+				.index2 {
+					padding: 0 15px 0 40px;
+				}
+			}
+			@media screen and (max-width:600px){
+				.language_button{
+					position: static;
+					float: right;
+					margin: 10px 30px;
+					background-color: #FFFFFC;
+					border-color: #0c59ab;
+				}
+			}
+			
+			dl.desc { margin-left: 2em;}
+			.desc dt {display: list-item; list-style: square;}
+			</style>
+		</head>
+<body>
+		<div id="header" class="header">
+			<h1>
+				<div class="head_word">Kujukuri Town Hazard Map</div>
+			</h1>
+		</div>	
+		<button class="language_button" onclick="location.href='index.html'">日本語</button> 
+
+			<div id="view">
+			<h2>How to use</h2>
+			<p>
+				<h4>○&nbsp;Browse the hazard map of Kujukuri town.</h4>
+				<div class="index">
+					<div class="map_type">
+						<div class="index_title">[Tsunami Inundation Simulation Area Map]</div>
+					</div>
+					<ul class="index2">
+
+						<li>Maximum simulated tsunami (Level 2 tsunami)</li>
+						Simulated range and height of inundation based on the Act on Development of Areas Resilient to Tsunami, at times of maximum-class (Level 2) tsunami under a bad condition.  
+
+						<li>Major Tsunami Warning 10m</li>
+						Simulated range and height of inundation at times of "Major Tsunami Warning 10m (tsunami height approx. 7-10m), based on the "Tsunami Inundation Simulation Map (FY2014-2015 Chiba Prefecture Earthquake Damage Estimation Survey Results)" created by Chiba Prefecture.
+
+						<li>Otsunami warning 5m</li>
+						Simulated range and height of inundation at times of "Major Tsunami Warning 5m (tsunami height approx. 3-5m), based on the "Tsunami Inundation Simulation Map (FY2014-2015 Chiba Prefecture Earthquake Damage Estimation Survey Results)" created by Chiba Prefecture.
+
+						<li>Tsunami warning 3m</li>
+						Simulated range and height of inundation at times of "Tsunami Warning ３m (tsunami height approx. 1-3m), based on the "Tsunami Inundation Simulation Map (FY2014-2015 Chiba Prefecture Earthquake Damage Estimation Survey Results)" created by Chiba Prefecture.
+
+						<li>Storm Surge Inundation</li>
+						Simulated range and depth of inundation in case of flooding caused by the largest possible storm surge (a typhoon on the scale of the Muroto Typhoon), based on the "Storm Surge Inundation Area Map (Chiba East Coast)" created by Chiba Prefecture under the Flood Control Act.
+
+						<li>Tsunami From Japan Trench Earthquake</li>
+						Simulated range and height of inundation in the Japan Trench (off Sanriku and Hidaka coasts) models examined at the Cabinet Office's Study Group on Modeling of Mega Earthquakes along the Japan Trench and the Kuril Islands Trench(<a href="https://www.bousai.go.jp/jishin/nihonkaiko_chishima/model/index.html" target="_blank">https://www.bousai.go.jp/jishin/nihonkaiko_chishima/model/index.html</a>).
+
+						<li>Tsunami From Kuril Islands Trench Earthquakes.</li>
+						Simulated range and height of inundation in the Kuril Islands Trench (off Tokachi and Nemuro coasts) models examined at the Cabinet Office's Study Group on Modeling of Mega Earthquakes along the Japan Trench and the Kuril Islands Trench(<a href="https://www.bousai.go.jp/jishin/nihonkaiko_chishima/model/index.html" target="_blank">https://www.bousai.go.jp/jishin/nihonkaiko_chishima/model/index.html</a>).
+					</ul>
+
+					<div class="index">
+						<dt>[Notes on viewing the map]</dt>
+						<dd>・The range and height of inundation shown on the map are results of calculated simulations based on arbitrary estimations.</dd>
+						<dd>・The range and height of inundation may be significantly different depending on various conditions such as the size of the earthquake, the location of the epicenter, etc.</dd>
+					</div>
+					
+					<p> </p>
+
+				</div>
+
+				<div class="index">
+
+					<div class="map_type">
+						<div class="index_title">[Flood Inundation Simulation Area Map]</div>
+					</div>
+					<ul class="index2">
+						<li>Maximum Simulation</li>
+						Simulated range and height of inundation at times of flood in rivers due to the maximum simulated rainfall (heavy rainfall of approx. once in 1,000 years).<br />
+						Based on the "Flood Inundation Simulation Area Map (Maximum Simulation)" published by Chiba Prefecture, the map is made from layers of areas of the five rivers (Magame, Sakuda, Nabaki, Kido, and Horikawa Rivers) that may affect the town.<br />
+						<br />
+						<dt>[Simulated rainfall]</dt>
+						<dd>・ Magame River: Total rainfall in 24 hrs. in the Magame River basin - 690.0mm</dd>
+						<dd>・ Sakuda River: Total rainfall in 24 hrs. in the Sakuda River basin - 686.5mm</dd>
+						<dd>・ Nabaki River: Total rainfall in 24 hrs. in the Nabaki River basin - 663.7mm</dd>
+						<dd>・ Kido River: Total rainfall in 24 hrs. in the Kido River basin - 676.5mm</dd>
+						<dd>・ Horikawa River: Total rainfall in 24 hrs. in the Horikawa River basin - 690.0mm</dd>
+
+						<br />
+						<dt>・ Assumed Area of Building Collapse and Flood (Bank Erosion)</dt>
+						<dd>Areas with risks of bank erosions that may wash away or collapse the houses at times of flood due to maximum simulated rainfall.</dd>
+
+						<br />
+						<li>Planned-scale</li>
+
+						Simulated range and height of inundation at times of river flood due to planned-scale rainfall (heavy rainfall of approx. once in 50 years).<br />
+						Based on the "Flood Inundation Simulation Area Map (Planned Scale)" published by Chiba Prefecture, the map is made from layers of areas of the three rivers (Magame, Sakuda, and Nabaki Rivers) that may affect the town.<br />
+						<br />
+						<dt>[Assumed rainfall]</dt>
+						<dd>・Magame River: Total rainfall in 24 hrs. in the Magame River basin - 288.0mm</dd>
+						<dd>・Sakuda River: Total rainfall in 24 hrs. in the Sakuda River basin - 287.0mm</dd>
+						<dd>・Nabaki River: Total rainfall in 24 hrs. in the Nabaki River basin - 288.3mm</dd>
+
+					</ul>
+
+					<div class="index">
+						<dt>[Notes on viewing the map]</dt>
+						<dd>・The range and height of inundation shown on the map are results of calculated simulations based on arbitrary estimations.</dd>
+						<dd>・The range and height of inundation may be significantly different depending on various conditions such as the rainfall, etc.</dd>
+						<dd>・Floods from storm surge and inland flood are not taken into consideration.</dd>
+					</div>
+
+					<p>　</p>
+
+				</div>
+			</p>
+			<p>
+				<h4>○&nbsp;Please use this service by agreeing to the following:</h4>
+				<ul class="index2">
+					<li>Hazard maps are reference materials based on the results of simulations under certain conditions.  Therefore, it may not be the same as the actual disaster.</li>
+
+					<li>The map information provided through this service does not represent everything about the Kujukuri Town Hazard Map.</li>
+					<li>The background maps ((<a href="https://maps.gsi.go.jp/development/ichiran.html" target="_blank">GSI Tiles</a>, <a href="https://www.google.com/maps/" target="_blank">Google Maps</a>)) may be different from  the current states.</li>
+					<li>GSI Maps' altitude API is used to indicate the altitude.</li>
+					<li>This service has been confirmed to work with the following browsers:</li>
+					Google Chrome、Microsoft Edge、Firefox
+					<li><a href="https://www.town.kujukuri.chiba.jp/" target="_blank">Kujukuri Town</a> is not responsible for any direct/indirect loss/failure caused by the use of this service.</li>
+					<li>The content of this service may change in its part/entirety without prior notice.  The service may also be temporarily suspended partially/entirely. </li>
+					<li><a href="https://www.town.kujukuri.chiba.jp/" target="_blank">Kujukuri Town</a> owns the copyright of the disaster-prevention aspects of Kujukuri Town Hazard Map.  In addition, the editing, processing, or reproduction of this map, its use for commercial purposes, use in violation of various laws and regulations, or use for purposes, means, or methods that may infringe on the rights, etc.</li>
+				</ul>
+			</p>
+			<p>　</p>
+			<p id="about_address_search">
+				<h4>○&nbsp;To use the address search function, please agree to the following:</h4>
+				<ol class="index2">
+					<li>The address search function of the Web version of the Kujukuri Town Hazard Map is provided with the use of the address search function by the private sector (Google Inc.), for the users' convenience.</li>
+					<li>The address search results does not provide all correct information.</li>
+					<li>Kujukuri Town does not guarantee the usefulness of this service even if the users use it for certain purposes, etc.  In addition, Kujukuri Town is not responsible for any direct/indirect loss/failure caused by the use of this service.</li>
+					<li>The address search function is assumed to be used under the users' responsibilities, who agreed with the above.</li>
+				</ol>
+			</p>
+			<p style="text-align: center; margin-top: 50px;">
+				The hazard map can be used by clicking the buttons below:
+				<div class="menu">
+					<a href="map-en.html#tsunami"><img src="images/title_img_en.png" alt="Kujukuri Town Tsunami / Flood Hazard Map" title="Kujukuri Town Tsunami / Flood Hazard Map"></a>
+				</div>
+			</p>			
+		</div>		
+		<div id="footer" class="footer">
+				<p><small><a href="https://www.town.kujukuri.chiba.jp/" target="_blank">Copyright (C) KUJUKURI All Rights Reserved.</a></small></p>
+		</div>
+	</body>
+</html>

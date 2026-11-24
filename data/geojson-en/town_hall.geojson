@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "town_hall",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::2451" } },
+"features": [
+{ "type": "Feature", "properties": { "Name": "Kujukuri Town Office", "Location": "4099 Katakai" }, "geometry": { "type": "Point", "coordinates": [ 55041.98416, -51409.038549999997485 ] } }
+]
+}

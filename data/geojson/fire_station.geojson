@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "fire_station",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::2451" } },
+"features": [
+{ "type": "Feature", "properties": { "名称": "中央消防署九十九里分署", "所在地": "片貝260" }, "geometry": { "type": "Point", "coordinates": [ 53658.05913, -52003.13607 ] } }
+]
+}

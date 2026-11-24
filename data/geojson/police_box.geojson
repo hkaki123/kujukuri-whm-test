@@ -1,0 +1,11 @@
+{
+"type": "FeatureCollection",
+"name": "police_box",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::2451" } },
+"features": [
+{ "type": "Feature", "properties": { "名称": "九十九里交番", "所在地": "片貝3357-2" }, "geometry": { "type": "Point", "coordinates": [ 55246.78645, -51652.81796 ] } },
+{ "type": "Feature", "properties": { "名称": "作田駐在所", "所在地": "作田5226番地1" }, "geometry": { "type": "Point", "coordinates": [ 56830.03688, -49881.11502 ] } },
+{ "type": "Feature", "properties": { "名称": "粟生駐在所", "所在地": "粟生2315-3" }, "geometry": { "type": "Point", "coordinates": [ 54816.22644, -53266.91948 ] } },
+{ "type": "Feature", "properties": { "名称": "真亀駐在所", "所在地": "真亀4908-280" }, "geometry": { "type": "Point", "coordinates": [ 54047.79419, -55074.6413 ] } }
+]
+}

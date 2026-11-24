@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "fire_station",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::2451" } },
+"features": [
+{ "type": "Feature", "properties": { "Name": "Chuo Fire Station Kujukuri Branch", "Location": "260 Katakai" }, "geometry": { "type": "Point", "coordinates": [ 53658.05913000000146, -52003.13607 ] } }
+]
+}

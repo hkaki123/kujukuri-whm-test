@@ -1,0 +1,11 @@
+{
+"type": "FeatureCollection",
+"name": "police_box",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::2451" } },
+"features": [
+{ "type": "Feature", "properties": { "Name": "Kujukuri Police Box", "Location": "3357-2 Katakai" }, "geometry": { "type": "Point", "coordinates": [ 55246.78645, -51652.81796 ] } },
+{ "type": "Feature", "properties": { "Name": "Sakuda Police Substation", "Location": "5226-1 Sakuda" }, "geometry": { "type": "Point", "coordinates": [ 56830.03688, -49881.115019999997457 ] } },
+{ "type": "Feature", "properties": { "Name": "Ao Police Substation", "Location": "2315-3 Ao" }, "geometry": { "type": "Point", "coordinates": [ 54816.226439999998547, -53266.919479999996838 ] } },
+{ "type": "Feature", "properties": { "Name": "Magame Police Substation", "Location": "4908-280 Magame" }, "geometry": { "type": "Point", "coordinates": [ 54047.79419, -55074.641300000002957 ] } }
+]
+}

@@ -1,0 +1,12 @@
+{
+"type": "FeatureCollection",
+"name": "waterlevel_observatory",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::2451" } },
+"features": [
+{ "type": "Feature", "properties": { "河川名": "作田川", "観測所名": "小関", "所在地": "九十九里町小関2814" }, "geometry": { "type": "Point", "coordinates": [ 55012.98056, -49566.35399 ] } },
+{ "type": "Feature", "properties": { "河川名": "作田川", "観測所名": "成東", "所在地": "山武市成東字下町" }, "geometry": { "type": "Point", "coordinates": [ 52313.25377, -43823.4276 ] } },
+{ "type": "Feature", "properties": { "河川名": "真亀川", "観測所名": "不動堂", "所在地": "九十九里町不動堂188-2" }, "geometry": { "type": "Point", "coordinates": [ 52991.74518, -53473.18116 ] } },
+{ "type": "Feature", "properties": { "河川名": "木戸川", "観測所名": "中台", "所在地": "山武市松尾町高富2346-2" }, "geometry": { "type": "Point", "coordinates": [ 56632.84547, -42426.98034 ] } },
+{ "type": "Feature", "properties": { "河川名": "南白亀川", "観測所名": "九十根", "所在地": "大網白里市長国260-1" }, "geometry": { "type": "Point", "coordinates": [ 49461.4451, -55222.58787 ] } }
+]
+}

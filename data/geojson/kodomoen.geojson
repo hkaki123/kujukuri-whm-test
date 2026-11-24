@@ -1,0 +1,9 @@
+{
+"type": "FeatureCollection",
+"name": "kodomoen",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::2451" } },
+"features": [
+{ "type": "Feature", "properties": { "名称": "とようみこども園", "所在地": "不動堂161番地1" }, "geometry": { "type": "Point", "coordinates": [ 52804.42119, -53190.32354 ] } },
+{ "type": "Feature", "properties": { "名称": "かたかいこども園", "所在地": "田中荒生1661番地" }, "geometry": { "type": "Point", "coordinates": [ 55573.43294, -50845.85025 ] } }
+]
+}

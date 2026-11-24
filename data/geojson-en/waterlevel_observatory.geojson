@@ -1,0 +1,12 @@
+{
+"type": "FeatureCollection",
+"name": "waterlevel_observatory",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::2451" } },
+"features": [
+{ "type": "Feature", "properties": { "River_name": "Sakuda River", "Observatory name": "Koseki", "Location": "2814 Koseki, Kujukuri Town" }, "geometry": { "type": "Point", "coordinates": [ 55012.980560000003607, -49566.35399000000325 ] } },
+{ "type": "Feature", "properties": { "River_name": "Sakuda River", "Observatory name": "Naruto", "Location": "Shimomachi, Naruto, Sanmu City" }, "geometry": { "type": "Point", "coordinates": [ 52313.253770000002987, -43823.427600000002712 ] } },
+{ "type": "Feature", "properties": { "River_name": "Magame River", "Observatory name": "Fudodo", "Location": "188-2 Fudodo, Kujukuri Town" }, "geometry": { "type": "Point", "coordinates": [ 52991.745179999998072, -53473.18116 ] } },
+{ "type": "Feature", "properties": { "River_name": "Kido River", "Observatory name": "Nakadai", "Location": "2346-2 Takatomi, Matsuomachi, Sanmu City" }, "geometry": { "type": "Point", "coordinates": [ 56632.84547, -42426.980340000001888 ] } },
+{ "type": "Feature", "properties": { "River_name": "Nabaki River", "Observatory name": "Kujune", "Location": "260-1 Nagakuni, Oamishirasato City" }, "geometry": { "type": "Point", "coordinates": [ 49461.445099999997183, -55222.587870000003022 ] } }
+]
+}

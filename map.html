@@ -1,0 +1,647 @@
+<!doctype html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<meta name="robots" content="noindex, nofollow">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>九十九里町ハザードマップ</title>
+		<script src="library/jquery-4.0.0.min.js" type="text/javascript"></script>
+		<script src="library/jquery-ui-1.14.2/jquery-ui.min.js" type="text/javascript"></script>
+		<link rel="stylesheet" href="library/jquery-ui-1.14.2/jquery-ui.min.css" type="text/css">
+		<script type="text/javascript">
+			if (typeof console == "undefined") {
+				console = function () { };
+				console.dir = function (v) { };
+				console.log = function (v) { };
+			}
+			if (typeof console.dir == "undefined") {
+				console.dir = function (v) { };
+			}
+			if (typeof console.log == "undefined") {
+				console.log = function (v) { };
+			}
+
+			var KUJUKURI_MAP_TYPE_1 = 1; // 防災マップ　※ 非使用
+			var KUJUKURI_MAP_TYPE_2 = 2; // 津波ハザードマップ
+			var KUJUKURI_MAP_TYPE_3 = 3; // 洪水ハザードマップ
+			var KUJUKURI_MAP_TYPE = KUJUKURI_MAP_TYPE_2;
+
+			var userAgent = window.navigator.userAgent.toLowerCase();
+			var IE = false;
+			if (userAgent.indexOf('msie') != -1 || userAgent.indexOf('trident') != -1) {
+				IE = true;
+			}
+		</script>
+		<link href="library/fancytree/skin-win8/ui.fancytree.css" rel="stylesheet">
+		<script src="library/fancytree/jquery.fancytree.js"></script>
+
+		<script src="library/proj4js/proj4.js" type="text/javascript"></script>
+		<script src="library/proj4js/defs/EPSG_Tokyo.js" type="text/javascript"></script>
+		<script src="library/proj4js/defs/EPSG_JGD2000.js" type="text/javascript"></script>
+		<script src="library/proj4js/defs/def_load.js" type="text/javascript"></script>
+
+		<!--
+		<link rel="stylesheet" href="library/ol.css" type="text/css">
+		<script src="library/ol.js" type="text/javascript"></script>
+		-->
+		<script type="text/javascript">
+			var ol_css = "library/ol.css";
+			var ol_js = "library/ol.js";
+			if (IE) {
+				ol_css = "library/ol-old/ol.css";
+				ol_js = "library/ol-old/ol.js";
+			}
+			eval( "docu"+"ment."+"wr"+"ite('<' + 'link href=\"' + ol_css + '\"' + ' rel=\"stylesheet\">');");
+			eval( "docu"+"ment."+"wr"+"ite('<' + 'script src=\"' + ol_js + '\"' + ' type=\"text/javascript\"><' + '/script>');");
+		</script>
+		<link rel="stylesheet" href="css/olmap.css" type="text/css">
+
+		<!-- ol-ext -->
+		<!--
+		<link rel="stylesheet" href="library/ol-ext.min.css" />
+		<script type="text/javascript" src="library/ol-ext.min.js"></script>
+		-->
+		<script type="text/javascript">
+			var ol_ext_css = "library/ol-ext.min.css";
+			var ol_ext_js = "library/ol-ext.min.js";
+			if (IE) {
+				ol_ext_css = "library/ol-old/ol-ext.min.css";
+				ol_ext_js = "library/ol-old/ol-ext.min.js";
+			}
+			eval( "docu"+"ment."+"wr"+"ite('<' + 'link href=\"' + ol_ext_css + '\"' + ' rel=\"stylesheet\">');");
+			eval( "docu"+"ment."+"wr"+"ite('<' + 'script src=\"' + ol_ext_js + '\"' + ' type=\"text/javascript\"><' + '/script>');");
+		</script>
+		<script src="library/turf.min.js" type="text/javascript"></script>
+
+		<script src="js/locale-ja.js" type="text/javascript"></script>
+		<script src="js/olmap.js" type="text/javascript"></script>
+		<script src="js/layers.js" type="text/javascript"></script>
+		<link rel="stylesheet" href="css/app.css" type="text/css">
+		<link rel="stylesheet" href="css/forprint.css" type="text/css">
+		<script src="js/app_flags.js" type="text/javascript"></script>
+		<script src="js/gmap_loader.js" type="text/javascript"></script>
+		<script src="js/app_functions.js" type="text/javascript"></script>
+		<script src="js/app.js" type="text/javascript"></script>
+		<style>
+		#copyright {
+			display: inline-block;
+		}
+		#copyright p {
+			margin: 0;
+		}
+		</style>
+	</head>
+<body>
+		<div id="loader-bg">
+			<div id="loading">
+				<img src="images/loading_lightbox.gif">
+			</div>
+		</div>
+
+		<!-- ▼ 左メニュー部 -->
+		<div id="left_menu">
+			<div id="header_id">
+				<div class="title_img">
+				<img src="images/title_img.png" width="300px" alt="九十九里町ハザードマップ" title="九十九里町ハザードマップ" />
+				<a href="index.html" class="top_url"></a>
+				</div>
+				<div class="title_word"><a href="index.html" style="color:#ffffff;text-decoration:none">九十九里町ハザードマップ</a></div>
+				<div id="humberger">
+				  <div></div>
+				  <div></div>
+				  <div></div>
+				</div>
+			</div>
+			<div id="left_menu_inner">
+				<div id="layer_menu_wrpper" class="disnone">
+					<div id="layer_menu_header" class="layer_menu_header ui-accordion-header ui-corner-top ui-state-default ui-accordion-icons ui-accordion-header-active ui-state-active">
+						<!-- <span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-s"></span> -->
+						レイヤ情報
+						<div class="btn_group">
+							<button id="btn_legend" class="ui-corner-all ui-state-default">凡例表示</button>
+						</div>
+					</div>
+					<div id="layer_menu">
+						<div id="theme_tree">
+						</div>
+						<div id="common_tree"></div>
+					</div>
+				</div>
+
+
+
+
+
+
+			</div><!-- id="left_menu_inner" -->
+		</div><!-- id="left_menu" -->
+		<!-- ▲ 左メニュー部 -->
+
+		<!-- ▼ヘッダー部 -->
+		<div id="top_menu" class="disnone">
+			<div id="header" class="header">
+				<div id="radio_map_type" class="noprint">
+					<input type="radio" id="radio_tsunami" name="radio_map_type" value="tsunami" checked="checked"><label for="radio_tsunami">津波ハザードマップ</label><!--<br class="br_mob">-->
+					<input type="radio" id="radio_flood" name="radio_map_type" value="flood" ><label for="radio_flood">洪水ハザードマップ</label><!--<br class="br_mob br_mob2" />-->
+				</div>
+				<div class="btn_group noprint" id="btn_mapfunction">
+					<button id="btn_elevation" class="ui-corner-all ui-state-default noprint" style="">標高表示</button>
+					<button id="btn_Inundation" class="ui-corner-all ui-state-default noprint" style="">浸水深表示</button>
+					<button id="btn_cityarea" class="ui-corner-all ui-state-default noprint" style="">全域表示</button>
+					<button id="btn_print" class="ui-corner-all ui-state-default noprint" style="">印刷画面</button>
+				</div>
+				<div id="copyright">
+					<p><small><a href="https://www.town.kujukuri.chiba.jp/" target="_blank">(c)千葉県山武郡九十九里町</a></small></p>
+				</div>
+				<div id="print_container" class="noprint">
+					<table class="noprint" id="printMenuTable" style="display: none;">
+					<tbody>
+						<tr>
+							<td style="width: 480px; height: 35px; padding: 4px;">
+								<span class="noprint">用紙サイズを指定後、「印刷」ボタンをクリックしてください。<br>（別途、プリンタの印刷設定ダイアログから、「用紙サイズ」<br>「印刷方向」の設定を合わせる必要があります）&nbsp;</span>
+							</td>
+							<td>
+								<input class="noprint" type="checkbox" id="hanrei_onoff" checked><label for="hanrei_onoff">凡例を表示</label>
+								<select class="noprint" id="paperSizeSelect">
+									<option value="A4_portrait">A4タテ</option>
+									<option value="A4_landscape">A4ヨコ</option>
+									<option value="A3_portrait">A3タテ</option>
+									<option value="A3_landscape">A3ヨコ</option>
+								</select>
+								<button class="noprint" id="printMap">印刷</button>
+							</td>
+						</tr>
+					</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<!-- ▲ヘッダー部 -->
+
+		<!-- ▼ 地図 -->
+		<div id="view" class="view" style="overflow: hidden;">
+			<!-- -->
+			<div id="olmap" class="full">
+				<div id="popup" class="ol-popup">
+					<a href="#" id="popup-closer" class="ol-popup-closer"></a>
+					<div id="popup-title"></div>
+					<div id="popup-content"></div>
+					<div style="display:none;">
+						<button type="button" class="btn btn-primary ol-feature-delete">Del</button>
+						<button type="button" class="btn btn-primary ol-feature-modify">Mod</button>
+						<button type="button" class="btn btn-primary ol-feature-text">Text</button>
+						<button type="button" class="btn btn-primary ol-popup-edit">Note</button>
+					</div>
+				</div>
+				<div id="toolbox-top" class="toolbox">
+					<div id="indexmenu">
+						<div class="list_name_left"></div>
+						<div class="list_name_right"></div>
+					</div>
+				</div>
+				<div id="toolbox-lefttop" class="toolbox"></div>
+				<div id="toolbox-righttop" class="toolbox">
+					<div id="layerbox_1" class="toolbox">
+						<ul id="baselayerswitcher">
+						</ul>
+					</div>
+					<div id="layerbox_2" class="toolbox">
+						<button type="button" class="btn btn-primary allonoff" name="onoff" value="onoff">すべてON</button>
+						<ul id="overlayerswitcher">
+						</ul>
+					</div>
+				</div>
+				<div id="toolbox-rightbottom" class="toolbox">
+					<div id="mouse-position" class="">
+						<span id="mouse-position-span"></span>
+						<!--Zoom：<span id="zoom-level" class="" ></span>-->
+					</div>
+					<div id="myattribution" class=""></div>
+				</div>
+			</div>
+			<!---->
+			<div id="gmap" class="full"></div>
+			<!---->
+
+			<div style="display: none;">
+				<!-- Overlay with the info -->
+				<div id="display-info">
+				</div>
+			</div>
+
+			<style>
+				#searchmenu {
+					position: absolute;
+					top: calc(0.5em + 3px);
+					right: 60px;
+					/* display: none; */
+				}
+				#searchmenu button{
+					height: 34px;
+					line-height: 32px;
+				}
+				#searchmenu input{
+					height: 32px;
+					line-height: 32px;
+					width: 200px;
+					font-size: large;
+				}
+				#searchmenu #notesSearchAddress {
+					width: 198px;
+					height: auto;
+					display: none;
+					background-color: #ffffff;
+					border-bottom-left-radius: 5px;
+					border-bottom-right-radius: 5px;
+					margin-left: 2px;
+					padding-left: 5px;
+				}
+				#searchmenu #notesSearchAddress .sampleAddress {
+					color: #444;
+				}
+				.add_note {
+					width: 240px;
+					position: relative;
+					background: rgba(255, 255, 255, 0.7);
+				}
+			</style>
+<script>
+var init_geocoder = function() {
+	$(document).on("focus","#txtAddress",function(evt){
+		// console.log("txtAddress.focus");
+		// console.log(this);
+		// console.log(evt);
+		$("#notesSearchAddress").show();
+	});
+	$(document).on("blur","#txtAddress",function(evt){
+		// console.log("txtAddress.blur");
+		// console.log(this);
+		// console.log(evt);
+		setTimeout(function(){$("#notesSearchAddress").hide(500);},500);
+	});
+	$(document).on("keypress","#txtAddress",function(evt){
+		$("#notesSearchAddress").hide();
+		exHandleTxtSetViewFromAddress(event.which);
+	});
+	var exHandleTxtSetViewFromAddress = function (key) {
+		if(key === 13){	// Enterキー
+			app.exSetViewFromAddress();
+		}
+		return false;
+	};
+	$(document).on("click","#notesSearchAddress .sampleAddress",function(evt){
+		$("#txtAddress").val($(this).text());
+	});
+	
+
+	// 住所検索機能
+	// Google Maps を読み込めない場合は住所検索を使わない
+	app._geocoder = null;
+	if ( ENABLE_GOOGLEMAPS && typeof google != "undefined" && google.maps && google.maps.Geocoder ) {
+		app._geocoder = new google.maps.Geocoder();
+		var sw = new google.maps.LatLng(app.extent_kujukuri[1], app.extent_kujukuri[0]);
+		var ne = new google.maps.LatLng(app.extent_kujukuri[3], app.extent_kujukuri[2]);
+		app._geocoderLatLngBounds = new google.maps.LatLngBounds(sw, ne);	// 検索用範囲
+	}
+
+	// 文字
+    app.createAddressTextStyle = function(feature, resolution) {
+        var align = "center";
+        var baseline = "middle";
+        var size = "18px";
+        var offsetX = 0;
+        var offsetY = 18;
+        var weight = "normal";
+        var placement = "point";
+        var maxAngle = undefined;
+        var overflow = true;
+        var rotation = 0;
+        var font = weight + ' ' + size + ' ' + "Arial";
+        var fillColor = "#0000ff";
+        var outlineColor = "#ffffff";
+        var outlineWidth = 5;
+
+        var txt = feature.get("address");
+		if ( txt && txt != "" ) {
+			return new ol.style.Text({
+			textAlign: align == '' ? undefined : align,
+			textBaseline: baseline,
+			font: font,
+			text: txt,
+			fill: new ol.style.Fill({color: fillColor}),
+			stroke: new ol.style.Stroke({color: outlineColor, width: outlineWidth}),
+			offsetX: offsetX,
+			offsetY: offsetY,
+			placement: placement,
+			maxAngle: maxAngle,
+			overflow: overflow,
+			rotation: rotation
+			});
+		} else {
+			return null;
+		}
+    };
+
+	// 住所検索位置にマーク
+	app.geocoderMarkerLayer = new ol.layer.Vector({
+		title: "geocoderMarkerLayer"
+		,source: new ol.source.Vector()
+		,projection: "EPSG:3857"
+		,visible: false
+		,style: function(feature, resolution) {
+			return new ol.style.Style({
+				image: new ol.style.Icon({
+					anchor: [0.5, 1.0],
+				    anchorXUnits: 'fraction',
+    				anchorYUnits: 'fraction',
+    				src: 'images/red_pin.png',
+					scale: 0.5
+				}),
+				text: app.createAddressTextStyle(feature, resolution)
+        	});
+		}
+
+	});
+	app.geocoderMarkerLayer.setZIndex(999999);
+	app.map.addLayer(app.geocoderMarkerLayer);
+	app.geocoderMarkerLayer.setVisible(false);
+	app.geocoderMarkerFeature = new ol.Feature({
+		type: 'Point',
+		geometry: new ol.geom.Point(0,0)
+	});
+	app.geocoderMarkerLayer.getSource().addFeature(app.geocoderMarkerFeature);
+
+	const hideMarker = function (pixel) {
+		app.geocoderMarkerLayer.getFeatures(pixel).then(function (features) {
+		    const feature = features.length ? features[0] : undefined;
+		    if (features.length > 0) {
+				app.geocoderMarkerLayer.setVisible(false);
+		    } else {
+		    }
+		});
+	};
+	const hideMarkerTolerance = function (pixel,hitTolerance) {
+		app.hit = false;
+		app.map.forEachFeatureAtPixel(
+			pixel,
+			function () {
+				app.hit = true;
+			},
+			{
+				hitTolerance: hitTolerance
+			}
+		);
+		if (app.hit) {
+			app.geocoderMarkerLayer.setVisible(false);
+			return false;
+		} else {
+		}
+		return true;
+	};
+	// クリックで消す
+	app.map.on('click', function (evt) {
+		// hideMarker(evt.pixel);
+		var hitTolerance = 100;
+		if ( app.geocoderMarkerLayer.getVisible() ) {
+			return hideMarkerTolerance(evt.pixel,hitTolerance);
+		}
+		return true;
+	});
+
+	app.isNumber = function(value) {
+  		return !Number.isNaN(parseInt(value));
+	};
+	app.hankaku2Zenkaku = function(str) {
+		return str.replace(/[Ａ-Ｚａ-ｚ０-９]/g, function(s) {
+			return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
+		});
+	}
+	//address: 検索する住所
+	app.address_history = [];
+	app.exSetViewFromAddress = function(address) {
+		app.geocoderMarkerLayer.setVisible(false);
+
+		var txtAddressinfo = address || $("#txtAddress").val();
+		var addressinfo = txtAddressinfo;
+		//console.log(addressinfo);
+		if (!addressinfo) {
+			$("#txtAddress").focus();
+			return;
+		}
+		if ( !app._geocoder ) {
+			alert("住所検索は現在ご利用いただけません。");
+			return;
+		}
+		if ( typeof app.address_history[addressinfo] != "undefined" ) {
+			var result = app.address_history[addressinfo];
+			app.jumpToResult(result);
+			return;
+		}
+		// 九十九里町に限定
+		if ( addressinfo.indexOf("九十九里町") >= 0 ) {
+		} else {
+			addressinfo = "千葉県山武郡九十九里町 " + addressinfo;
+		}
+		var opt_request = {
+			'address': addressinfo
+			,'bounds': app._geocoderLatLngBounds
+			,'region': 'JP'
+		};
+		//console.dir(opt_request);
+		app._geocoder.geocode(opt_request, function(results, status) {
+			if (status == google.maps.GeocoderStatus.OK && results.length > 0) {
+				console.dir(results);
+				var result = results[results.length-1];
+				app.jumpToResult(result);
+			} else {
+				console.log('Geocoder failed due to: ' + status);
+				console.dir(results);
+				alert("検索できませんでした。");
+			}
+		});
+		app.jumpToResult = function(result) {
+			if (result && result.geometry) {
+				var txtAddress = "";
+				for ( var i = 0 ; i < result["address_components"].length ; i++ ) {
+					var compo = result["address_components"][i];
+					if ( compo["types"].indexOf("sublocality") >= 0 || compo["types"].indexOf("premise") >= 0 || compo["types"].indexOf("point_of_interest") >= 0 ) {
+						// var t_join = compo["types"].indexOf("premise") >= 0 ? "-" : "";
+						var txt_1 = app.hankaku2Zenkaku(compo.short_name);
+						var txt_2 = app.hankaku2Zenkaku(txtAddress);
+						var t_join = "";
+						if ( txt_1.length > 0 && txt_2.length > 0 ) {
+							t_join = (app.isNumber(txt_1[txt_1.length-1]) && app.isNumber(txt_2[0])) ? "-" : "";
+						}
+						txtAddress = compo.short_name + t_join + txtAddress;
+					}
+				}
+				var reslatLng = result.geometry.location;
+				console.log(reslatLng.lat()+", "+reslatLng.lng());
+				if (app._geocoderLatLngBounds.contains(reslatLng)) {
+					var lonlat = [ reslatLng.lng(), reslatLng.lat() ];
+					if (result.geometry.viewport) {
+						var reslatLngBounds = result.geometry.viewport;
+						// app._mapObj.fitBounds(reslatLngBounds);
+						app.map.getView().fit(ol.proj.transformExtent([
+							reslatLngBounds.getSouthWest().lng(),
+							reslatLngBounds.getSouthWest().lat(),
+							reslatLngBounds.getNorthEast().lng(),
+							reslatLngBounds.getNorthEast().lat()
+						], "EPSG:4612", "EPSG:3857"), app.map.getSize(), {minResolution: 0.149291070869485});
+
+					} else {
+						app.map.getView().setCenter(ol.proj.transform(lonlat,"EPSG:4612", "EPSG:3857"));
+					}
+					// show Balloon
+					var coordinate = ol.proj.transform(lonlat,"EPSG:4612", "EPSG:3857");
+					app.geocoderMarkerLayer.setVisible(true);
+					app.geocoderMarkerFeature.getGeometry().setCoordinates(coordinate);
+					app.geocoderMarkerFeature.set("address",txtAddress);
+					app.geocoderMarkerLayer.getSource().changed();
+					// // n秒で消す
+					// setTimeout(function() {
+					// 	app.geocoderMarkerLayer.setVisible(false);
+					// },1000*10);
+					app.address_history[addressinfo] = result;
+
+					if ( $("#notesSearchAddress > .history div:contains('"+txtAddressinfo+"')").length == 0 ) {
+						$("#notesSearchAddress > .history").prepend($("<div>").addClass("sampleAddress").text(txtAddressinfo));
+					}
+
+				} else {
+					alert("所定の範囲内に、検索した住所、地名は見つかりませんでした。");
+				}
+			} else {
+				alert("検索した住所、地名は見つかりませんでした。");
+			}
+		}
+	};
+	// <-- 住所検索機能
+};
+</script>
+			<!-- 住所検索 -->
+			<div id="searchmenu" class="noprint">
+				<div class="add_note">検索できた住所レベル（おおよその位置）でピンが立ち、青ラベルを表示します。<br />
+					<a class="open_dialog" info_type="address_search" href="./#about_address_search">住所検索機能について</a></div>
+				<input type="text" id="txtAddress" value="" placeholder="検索する">
+				<button id="btnSearchAddress" onclick="app.exSetViewFromAddress();"><img src="images/search.png" title="住所検索" alt="住所検索"></button>
+				<div id="notesSearchAddress">
+					<div style="font-weight: 700;">入力履歴</div>
+					<div class="history" ></div>
+					<div style="font-weight: 700;">入力例</div>
+					<div class="sample">
+						<div class="sampleAddress">片貝4099</div>
+						<div class="sampleAddress">真亀</div>
+						<div class="sampleAddress">西野郵便局</div>
+						<div class="sampleAddress">九十九里病院</div>
+					</div>
+					
+			</div>
+			</div>
+		</div>
+		
+		<div id="footer" class="footer"></div>
+		
+		<!-- ▼ 凡例ダイアログ -->
+		<div id="hanrei_dialog" title="凡例" style="display:none;">
+			<div id="hanrei_wrapper">
+				<div id="disa_pre_hanrei" class="hanrei" style="display: none;">
+					<!-- <img src="data/legend/xxxx.png" title="防災凡例" alt="防災凡例">
+					<img src="data/legend/xxxx.png" title="防災凡例" alt="防災凡例"> -->
+				</div>
+				<div id="tsunami_hanrei" class="hanrei" style="display: none;">
+					<img class="hanrei_1" src="data/legend/tsunami_01.png" title="津波凡例" alt="津波凡例">
+					<!-- <img class="hanrei_2" src="data/legend/tsunami_02.png" title="津波凡例" alt="津波凡例"> -->
+				</div>
+				<div id="flood_hanrei" class="hanrei" style="display: none;">
+					<!-- <img class="hanrei_1" src="data/legend/flood_01.png" title="洪水凡例" alt="洪水凡例"> -->
+					<img class="hanrei_2" src="data/legend/flood_shinsui.png" title="洪水凡例" alt="洪水凡例">
+					<img class="hanrei_4" src="data/legend/flood_04.png" title="洪水凡例" alt="洪水凡例">
+					<img class="hanrei_3" src="data/legend/flood_kaoku.png" title="洪水凡例" alt="洪水凡例">
+					<img class="hanrei_5" src="data/legend/flood_05.png" title="洪水凡例" alt="洪水凡例">
+				</div>
+				<div id="sedi_disa_hanrei" class="hanrei" style="display: none;">
+					<!-- <img class="hanrei_1" src="data/legend/xxxx.png" title="洪水凡例" alt="洪水凡例"> -->
+				</div>
+			</div>
+		</div>
+		<!-- ▲ 凡例ダイアログ -->
+		<!-- ▼ 凡例（印刷画面用）-->
+		<div id="hanrei_forprint" title="凡例" style="display:none;">
+			<div id="hanrei_layer_1"></div>
+			<div id="hanrei_layer_2"></div>
+			<div id="hanrei_image_1"></div>
+		</div>
+		<!-- ▲ 凡例（印刷画面用） -->
+		<script>
+
+function startsWith(src,searchString) {
+	return src.substr(0, searchString.length) === searchString;
+}
+
+// Google Maps APIキー
+if ( ENABLE_GOOGLEMAPS ) {
+	var gmapkey = ""; // 
+	loadGoogleMaps(gmapkey);
+	// style追加（ol-ext.min.css を上書き）
+	$("#popup.ol-popup").css("font-size", "1.0em");
+}
+
+$(window).on("load", function(){
+
+	function callbackGoogle () {
+		// Handler when all assets (including images) are loaded
+		if (typeof app.options === 'undefined') {
+			app.options = {};
+		}
+		app.options.lat = 0;
+		app.options.lon = 0;
+
+		if ( isGoogleMapsSettled() ) {
+			console.log("startup:started");
+			startup(window.app);
+		} else {
+			console.log("wait......");
+			setTimeout(callbackGoogle, 100);
+		}
+	}
+
+	callbackGoogle();
+});
+$(document).on("click",".open_dialog",function(evt){
+	// console.log(arguments);
+	var obj = $(evt.target);
+	var info_type = obj.attr("info_type");
+	if ( info_type == "address_search") {
+		info_type = "address_search";
+	} else {
+		info_type = "chiban_search";
+	}
+	$( "#info_dialog_"+info_type ).dialog({
+		modal: true,
+		autoOpen: true,
+	    height: 500,
+      	width: 500,
+		buttons: {
+			Ok: function() {
+				$( this ).dialog( "close" );
+			}
+      	}
+	});
+	return false;
+});
+		</script>
+		<div id="info_dialog_address_search" style="display: none;" title="住所検索機能について">
+			<p id="about_address_search">
+				<h4>住所検索機能についてのご利用は次の事項にご同意の上、ご利用願います。</h4>
+				<ol id="index2">
+					<li>このWeb版九十九里町ハザードマップの住所検索機能は、利用者の利便性を目的として、民間（Google社）の住所検索機能を利用して提供しています。</li>
+					<li>住所検索の結果は全ての正しい情報を提供するものではありません。</li>
+					<li>九十九里町は利用者が特定の目的等に使用されても有用であることを保証しません。また利用によって発生する直接又は間接の損失、損害等について、一切の責任を負いません。</li>
+					<li>この住所検索機能は、上記事項にご同意され利用者の責任において利用するものとします。</li>
+				</ol>
+			</p>
+		</div>
+	</body>
+</html>
