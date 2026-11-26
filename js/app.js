@@ -37,7 +37,12 @@ function hex2rgb(hex, opacity) {
 // 前から下層になる
 function setLayerList(app) {
 	console.log("wait_google");
-	if ( isGoogleMapsSettled() ) {
+	if ( !ENABLE_GOOGLEMAPS || (
+		typeof google != "undefined"
+		&& typeof google.maps != "undefined"
+		&& typeof google.maps.SymbolPath != "undefined"
+		&& typeof google.maps.SymbolPath.CIRCLE != "undefined" )
+		) {
 		console.log("setLayerList:started");
 		app.layer_list = [
 			// 空レイヤー
@@ -299,7 +304,8 @@ var startup = function(app) {
 		app.gmap = false;
 	}
 	if ( !app.gmap ) {
-		// Google Maps を使わない（読み込めない）場合は、地理院タイル（淡色地図）を初期表示する
+		app.is_init = true;
+		// 確認用サイト：地理院タイル（淡色地図）を初期表示する
 		for ( var l in app.layers ) {
 			if ( app.layers[l].get("title") == chiriin_tile_pale ) {
 				$("#baselayerswitcher input[name=layer][value=" + l + "]").prop("checked", true);
@@ -307,7 +313,6 @@ var startup = function(app) {
 				break;
 			}
 		}
-		app.is_init = true;
 	}
 
 	// 地図が出来てから実行する
